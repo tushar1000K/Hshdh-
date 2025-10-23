@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Premium WhatsApp Sender</title>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1724;
+    --card:#0b1220;
+    --accent:#7c3aed;
+    --muted:#93a3bf;
+    --glass: rgba(255,255,255,0.03);
+  }
+  *{box-sizing:border-box;font-family:'Inter',system-ui,Segoe UI,Roboto,Arial;}
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: radial-gradient(1200px 600px at 10% 20%, rgba(124,58,237,0.12), transparent 8%),
+                radial-gradient(800px 500px at 90% 80%, rgba(2,132,199,0.06), transparent 8%),
+                var(--bg);
+    color:#e6eef8;
+  }
+
+  .card{
+    width:960px;
+    max-width:95%;
+    background: linear-gradient(180deg,var(--card), rgba(255,255,255,0.01));
+    border-radius:18px;
+    padding:32px;
+    box-shadow: 0 8px 40px rgba(2,6,23,0.6);
+    display:grid;
+    grid-template-columns: 1fr 420px;
+    gap:20px;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.03);
+  }
+
+  .glow {
+    position:absolute;
+    inset: -30% -40% auto auto;
+    width:600px; height:600px;
+    background: linear-gradient(135deg, rgba(124,58,237,0.18), rgba(2,132,199,0.12));
+    filter: blur(60px);
+    transform: rotate(20deg);
+    pointer-events:none;
+  }
+
+  h1{margin:0;font-size:28px;font-weight:800;letter-spacing:-0.5px;}
+  p.lead{color:var(--muted);margin:8px 0 22px;font-size:14px;}
+
+  .left {
+    padding-right:8px;
+  }
+
+  .phone-preview{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:12px;
+    padding:18px;
+    min-height:220px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+    border:1px solid rgba(255,255,255,0.02);
+  }
+  .phone-msg{
+    background: linear-gradient(180deg, rgba(124,58,237,0.05), rgba(124,58,237,0.02));
+    align-self:flex-start;
+    padding:12px 14px;
+    border-radius:12px;
+    max-width:78%;
+    font-weight:600;
+    box-shadow: 0 6px 18px rgba(124,58,237,0.06);
+    transform-origin:left center;
+    animation: floaty 3s ease-in-out infinite;
+  }
+  @keyframes floaty{
+    0%{transform: translateY(0) rotate(-1deg)}
+    50%{transform: translateY(-6px) rotate(1deg)}
+    100%{transform: translateY(0) rotate(-1deg)}
+  }
+
+  form {
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  label{font-size:13px;color:var(--muted);}
+  input, textarea, button, select{
+    background: var(--glass);
+    border:1px solid rgba(255,255,255,0.03);
+    color: #e6eef8;
+    padding:12px 14px;
+    border-radius:10px;
+    outline:none;
+    font-size:14px;
+  }
+  input::placeholder, textarea::placeholder {color: rgba(230,238,248,0.55)}
+  textarea{min-height:120px;resize:vertical;}
+
+  .controls{display:flex;gap:10px;align-items:center;}
+  .btn{
+    padding:12px 16px;border-radius:12px;border:none;font-weight:700;cursor:pointer;
+    background: linear-gradient(90deg,var(--accent), #06b6d4);
+    color:white;
+    box-shadow: 0 8px 30px rgba(2,6,23,0.5);
+  }
+
+  .mini {font-size:13px;color:var(--muted);}
+
+  /* success bubble */
+  .status {
+    margin-top:8px;
+    font-size:13px;
+    padding:10px 12px;
+    border-radius:10px;
+    display:inline-block;
+    background: rgba(14,165,233,0.06);
+    color: #8be3ff;
+    border:1px solid rgba(11,135,174,0.08);
+  }
+
+  /* mobile fallback */
+  @media (max-width:860px){
+    .card{grid-template-columns: 1fr; padding:20px;}
+    .phone-msg{max-width:100%;}
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="glow" aria-hidden="true"></div>
+
+    <div class="left">
+      <h1>Send Premium WhatsApp Message</h1>
+      <p class="lead">Enter recipient's WhatsApp number (with country code). Messages are sent only after explicit consent. Stylish preview & animated effects included.</p>
+
+      <div class="phone-preview" id="preview">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:46px;height:46px;border-radius:10px;background:linear-gradient(180deg,#ffffff06,#ffffff03);display:flex;align-items:center;justify-content:center;font-weight:800">WA</div>
+          <div>
+            <div style="font-weight:700">WhatsApp Preview</div>
+            <div style="font-size:12px;color:var(--muted)">Real-time preview of message & animation</div>
+          </div>
+        </div>
+
+        <div class="phone-msg" id="previewMsg">Hello! This is a premium message. ✨</div>
+      </div>
+
+      <div style="margin-top:14px">
+        <small class="mini">Tip: Number format: <code>+919876543210</code></small>
+      </div>
+    </div>
+
+    <div>
+      <form id="sendForm" onsubmit="return false;">
+        <label>WhatsApp Number</label>
+        <input id="number" placeholder="+919876543210" required />
+
+        <label>Message (what user will receive)</label>
+        <textarea id="message">Hey! I tried sending you this message from our premium site. Reply STOP to opt-out.</textarea>
+
+        <label>Confirm consent</label>
+        <select id="consent" required>
+          <option value="">-- Select --</option>
+          <option value="yes">Recipient consented to receive this message</option>
+          <option value="no">Recipient has NOT consented (Don't send)</option>
+        </select>
+
+        <div class="controls">
+          <button class="btn" id="sendBtn">Send via WhatsApp</button>
+          <div id="spinner" style="display:none;align-items:center">Sending…</div>
+        </div>
+
+        <div id="status" style="margin-top:10px"></div>
+      </form>
+
+      <p style="margin-top:18px;font-size:13px;color:var(--muted)">
+        Legal: Only send messages to users who gave consent. Using the Twilio or Meta WhatsApp API requires account setup & approved templates for templated messages.
+      </p>
+    </div>
+  </div>
+
+<script>
+  const numberEl = document.getElementById('number');
+  const msgEl = document.getElementById('message');
+  const previewMsg = document.getElementById('previewMsg');
+  const sendBtn = document.getElementById('sendBtn');
+  const statusEl = document.getElementById('status');
+  const consentEl = document.getElementById('consent');
+
+  // Live preview update + small bounce animation
+  function updatePreview(){
+    previewMsg.textContent = msgEl.value || '…';
+    previewMsg.style.transform = 'scale(0.995)';
+    setTimeout(()=> previewMsg.style.transform = '', 120);
+  }
+  msgEl.addEventListener('input', updatePreview);
+
+  // Send action (calls backend)
+  sendBtn.addEventListener('click', async () => {
+    statusEl.innerHTML = '';
+    if (!consentEl.value || consentEl.value !== 'yes') {
+      statusEl.innerHTML = '<div class="status" style="background:rgba(255,80,80,0.06);color:#ffb3b3;border-color:rgba(255,80,80,0.08)">Please confirm recipient consent before sending.</div>';
+      return;
+    }
+    const payload = {
+      number: numberEl.value.trim(),
+      message: msgEl.value.trim()
+    };
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Sending...';
+    try{
+      const res = await fetch('/api/send', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (res.ok) {
+        statusEl.innerHTML = '<div class="status">✅ Message queued/sent. ID: '+(data.id||'n/a')+'</div>';
+      } else {
+        statusEl.innerHTML = '<div class="status" style="background:rgba(255,80,80,0.06);color:#ffb3b3;border-color:rgba(255,80,80,0.08)">Error: '+(data.error||'unknown')+'</div>';
+      }
+    }catch(err){
+      statusEl.innerHTML = '<div class="status" style="background:rgba(255,80,80,0.06);color:#ffb3b3;border-color:rgba(255,80,80,0.08)">Network error</div>';
+    } finally {
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Send via WhatsApp';
+    }
+  });
+
+  // small auto sample
+  setTimeout(()=> {
+    msgEl.value = "Hello! 👋 This is a premium message from our site. Reply STOP to opt-out.";
+    updatePreview();
+  }, 400);
+</script>
+</body>
+</html>
